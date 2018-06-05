@@ -48,9 +48,21 @@ var getMaxElement = function (arr) {
 var renderGraph = function (ctx, names, times) {
   var maxTime = getMaxElement(times);
 
-  for (var i = 0; i < times.length; i++) {
+  for (var i = 0; i < names.length; i++) {
+    var b = Math.floor(Math.random() * 256);
+    var randomBlue = 'rgb(' + 0 + ',' + 0 + ',' + b + ')';
+
+    if (names[i] === 'Вы') {
+      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+    } else {
+      ctx.fillStyle = randomBlue;
+    }
+
     ctx.fillRect(CLOUD_X + BAR_GAP + (BAR_GAP + BAR_WIDTH) * i, TEXT_HEIGHT + GRAPH_HEIGHT - GRAPH_HEIGHT * times[i] / maxTime, BAR_WIDTH, GRAPH_HEIGHT * times[i] / maxTime);
+
+    ctx.fillStyle = '#000';
     ctx.fillText(names[i], CLOUD_X + BAR_GAP + (BAR_GAP + BAR_WIDTH) * i, CLOUD_Y + GRAPH_HEIGHT + TEXT_HEIGHT + GAP);
+
     ctx.fillText(Math.floor(times[i]), CLOUD_X + BAR_GAP + (BAR_GAP + BAR_WIDTH) * i, TEXT_HEIGHT + GRAPH_HEIGHT - GRAPH_HEIGHT * times[i] / maxTime - GAP);
   }
 };
