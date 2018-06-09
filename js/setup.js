@@ -1,12 +1,10 @@
 'use strict';
 
 var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-
 var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-
 var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+var wizardAmount = 4;
 
 // Показываем окно настроек
 
@@ -21,46 +19,31 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
   .content
   .querySelector('.setup-similar-item');
 
-// Тасование Фишера-Йетса
+// Случайный элемент массива
 
-function shuffleArray(array) {
-  for (var i = array.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
+var getRandomElement = function (arr) {
+  var randomElement = Math.floor(Math.random() * arr.length);
+
+  return arr[randomElement];
+};
+
+// Создаём массив персонажей со случайными параметрами
+
+var generateWizards = function (amount) {
+  var similarWizards = [];
+
+  for (var i = 0; i < amount; i++) {
+    var wizardFeatures = {};
+
+    wizardFeatures.name = getRandomElement(WIZARD_NAMES) + ' ' + getRandomElement(WIZARD_SURNAMES);
+    wizardFeatures.coatColor = getRandomElement(COAT_COLORS);
+    wizardFeatures.eyesColor = getRandomElement(EYES_COLORS);
+
+    similarWizards.push(wizardFeatures);
   }
-  return array;
-}
 
-shuffleArray(WIZARD_NAMES);
-shuffleArray(WIZARD_SURNAMES);
-shuffleArray(COAT_COLORS);
-shuffleArray(EYES_COLORS);
-
-// Массив объектов с персонажами
-
-var wizards = [{
-  name: WIZARD_NAMES[0] + ' ' + WIZARD_SURNAMES[0],
-  coatColor: COAT_COLORS[0],
-  eyesColor: EYES_COLORS[0]
-},
-{
-  name: WIZARD_NAMES[1] + ' ' + WIZARD_SURNAMES[1],
-  coatColor: COAT_COLORS[1],
-  eyesColor: EYES_COLORS[1]
-},
-{
-  name: WIZARD_NAMES[2] + ' ' + WIZARD_SURNAMES[2],
-  coatColor: COAT_COLORS[2],
-  eyesColor: EYES_COLORS[2]
-},
-{
-  name: WIZARD_NAMES[3] + ' ' + WIZARD_SURNAMES[3],
-  coatColor: COAT_COLORS[3],
-  eyesColor: EYES_COLORS[3]
-}
-];
+  return similarWizards;
+};
 
 // Отрисуем шаблон в документ и вставим данные
 
@@ -74,8 +57,10 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
+var wizards = generateWizards(wizardAmount);
+
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < wizards.length; i++) {
+for (var i = 0; i < wizardAmount; i++) {
   fragment.appendChild(renderWizard(wizards[i]));
 }
 similarListElement.appendChild(fragment);
