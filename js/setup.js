@@ -33,13 +33,7 @@ var COAT_COLORS = [
 
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 
-var FIREBALL_COLORS = [
-  '#ee4830',
-  '#30a8ee',
-  '#5ce6c0',
-  '#e848d5',
-  '#e6e848'
-];
+var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
 var wizardAmount = 4;
 var ESC_KEYCODE = 27;
@@ -154,24 +148,24 @@ setupClose.addEventListener('keydown', function (evt) {
 var wizardCoat = setup.querySelector('.wizard-coat');
 var wizardEyes = setup.querySelector('.wizard-eyes');
 var wizardFireball = setup.querySelector('.setup-fireball-wrap');
-var inputWizardCoat = document.querySelector('input[name="coat-color"]');
-var inputWizardEyes = document.querySelector('input[name="eyes-color"]');
-var inputFireball = document.querySelector('input[name="fireball-color"]');
+var inputWizardCoat = setup.querySelector('input[name="coat-color"]');
+var inputWizardEyes = setup.querySelector('input[name="eyes-color"]');
+var inputFireball = setup.querySelector('input[name="fireball-color"]');
+
+var changeWizard = function (array, element, property, input) {
+  var color = getRandomElement(array);
+  element.style[property] = color;
+  input.setAttribute('value', color);
+};
 
 wizardCoat.addEventListener('click', function () {
-  var coatColor = getRandomElement(COAT_COLORS);
-  wizardCoat.style.fill = coatColor;
-  inputWizardCoat.setAttribute('value', coatColor);
+  changeWizard(COAT_COLORS, wizardCoat, 'fill', inputWizardCoat);
 });
 
 wizardEyes.addEventListener('click', function () {
-  var eyesColor = getRandomElement(EYES_COLORS);
-  wizardEyes.style.fill = eyesColor;
-  inputWizardEyes.setAttribute('value', eyesColor);
+  changeWizard(EYES_COLORS, wizardEyes, 'fill', inputWizardEyes);
 });
 
 wizardFireball.addEventListener('click', function () {
-  var fireballColor = getRandomElement(FIREBALL_COLORS);
-  wizardFireball.style.backgroundColor = fireballColor;
-  inputFireball.setAttribute('value', fireballColor);
+  changeWizard(FIREBALL_COLORS, wizardFireball, 'backgroundColor', inputFireball);
 });
