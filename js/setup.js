@@ -102,6 +102,10 @@ var setupOpen = document.querySelector('.setup-open');
 var setup = document.querySelector('.setup');
 var setupClose = setup.querySelector('.setup-close');
 var nameForm = setup.querySelector('.setup-user-name');
+var setupPosition = {
+  x: '50%',
+  y: '80px'
+};
 
 var onPopupEscPress = function (evt) {
   if (nameForm === document.activeElement) {
@@ -121,6 +125,8 @@ var openPopup = function () {
 
 var closePopup = function () {
   setup.classList.add('hidden');
+  setup.style.left = setupPosition.x;
+  setup.style.top = setupPosition.y;
   document.removeEventListener('keydown', onPopupEscPress);
 };
 
